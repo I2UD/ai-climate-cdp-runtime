@@ -1,0 +1,2 @@
+pysatproc==0.1.9
+unetseg==0.2.2

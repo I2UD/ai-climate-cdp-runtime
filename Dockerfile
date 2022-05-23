@@ -1,9 +1,10 @@
 # Specify an ML Runtime base image
 FROM docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-workbench-python3.9-cuda:2022.04.1-b6
 
-# Install system packages in the new image
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends \
+# Install and upgrade system packages in the new image
+RUN apt-get update \
+  && apt-get upgrade -y \
+  && apt-get install -y --no-install-recommends \
     gdal-bin \
     libgdal-dev \
     libgl1 \
@@ -12,14 +13,12 @@ RUN apt-get update && \
     proj-bin \
     python3-dev \
     python3-venv \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
-# Upgrade packages in the base image
-RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install the python package sklearn
-#RUN pip install --no-cache-dir sklearn
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Override Runtime label and environment variables metadata
 ENV ML_RUNTIME_EDITION="AI Climate NVIDIA GPU" \
