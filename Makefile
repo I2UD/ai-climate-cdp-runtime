@@ -6,11 +6,11 @@ PATCH_VERSION := 0
 VERSION := $(SHORT_VERSION).$(PATCH_VERSION)
 IMAGE_NAME := $(TAGNAME):$(VERSION)
 
-push: build
-	docker push $(IMAGE_NAME)
-
 build:
 	docker build --force-rm -t $(IMAGE_NAME) .
+
+push: build
+	docker push $(IMAGE_NAME)
 
 clean:
 	docker rmi $(IMAGE_NAME)
