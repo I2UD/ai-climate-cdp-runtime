@@ -1,5 +1,5 @@
 # Specify an ML Runtime base image
-FROM docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-workbench-python3.9-cuda:2022.04.1-b6
+FROM docker.repository.cloudera.com/cloudera/cdsw/ml-runtime-jupyterlab-python3.9-cuda:2022.04.1-b6
 
 # Install and upgrade system packages in the new image
 RUN apt-get update \

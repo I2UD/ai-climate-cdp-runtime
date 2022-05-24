@@ -1,7 +1,7 @@
 .PHONY: build push clean
 
 TAGNAME := dymaxionlabs/ai-climate-cdp-runtime
-SHORT_VERSION := 0.2
+SHORT_VERSION := 0.3
 PATCH_VERSION := 0
 VERSION := $(SHORT_VERSION).$(PATCH_VERSION)
 IMAGE_NAME := $(TAGNAME):$(VERSION)
