@@ -12,5 +12,8 @@ build:
 push: build
 	docker push $(IMAGE_NAME)
 
+run: build
+	docker run -ti $(IMAGE_NAME) /bin/bash
+
 clean:
 	docker rmi $(IMAGE_NAME)
