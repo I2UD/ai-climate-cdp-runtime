@@ -14,6 +14,7 @@ RUN apt-get update \
     libproj-dev \
     libspatialindex-dev \
     proj-bin \
+    file \
     python3-dev \
     python3-venv \
   && apt-get clean \
@@ -25,6 +26,13 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
   && apt-get update -y && apt-get install google-cloud-cli -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
+
+# Install Orfeo Toolbox
+ARG OTB_LINUX64_PACKAGE=OTB-8.0.1-Linux64.run
+RUN wget -q https://www.orfeo-toolbox.org/packages/$OTB_LINUX64_PACKAGE \
+  && chmod +x ./$OTB_LINUX64_PACKAGE \
+  && ./$OTB_LINUX64_PACKAGE /usr/local/bin/ \
+  && rm -f ./$OTB_LINUX64_PACKAGE
 
 # Install Python dependencies
 COPY requirements.txt .
