@@ -22,11 +22,15 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Orfeo Toolbox
-ARG OTB_LINUX64_PACKAGE=OTB-8.0.1-Linux64.run
-RUN wget -q https://www.orfeo-toolbox.org/packages/$OTB_LINUX64_PACKAGE \
-  && chmod +x ./$OTB_LINUX64_PACKAGE \
-  && ./$OTB_LINUX64_PACKAGE /usr/local/bin/ \
-  && rm -f ./$OTB_LINUX64_PACKAGE
+ARG otb_version=8.0.1
+ENV OTB_PACKAGE_NAME=OTB-${otb_version}-Linux64
+RUN wget -q https://www.orfeo-toolbox.org/packages/$OTB_PACKAGE_NAME.run \
+  && chmod +x ./$OTB_PACKAGE_NAME.run \
+  && mv ./$OTB_PACKAGE_NAME.run /opt/ \
+  && cd /opt/ \
+  && /opt/$OTB_PACKAGE_NAME.run \
+  && rm -f /opt/$OTB_PACKAGE_NAME.run \
+  && ln -s /opt/$OTB_PACKAGE_NAME /opt/OTB
 
 # Install gcloud SDK
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
