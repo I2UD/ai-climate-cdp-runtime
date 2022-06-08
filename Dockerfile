@@ -13,6 +13,7 @@ RUN apt-get update \
     libgdal-dev \
     libgl1 \
     libproj-dev \
+    libpython3.9 \
     libspatialindex-dev \
     proj-bin \
     python3-dev \

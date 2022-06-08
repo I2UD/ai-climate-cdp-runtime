@@ -2,7 +2,7 @@
 
 TAGNAME := dymaxionlabs/ai-climate-cdp-runtime
 SHORT_VERSION := 0.5
-PATCH_VERSION := 0
+PATCH_VERSION := 1
 VERSION := $(SHORT_VERSION).$(PATCH_VERSION)
 IMAGE_NAME := $(TAGNAME):$(VERSION)
 
