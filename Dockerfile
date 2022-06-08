@@ -7,6 +7,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
+    file \
     gdal-bin \
     gnupg \
     libgdal-dev \
@@ -14,16 +15,9 @@ RUN apt-get update \
     libproj-dev \
     libspatialindex-dev \
     proj-bin \
-    file \
     python3-dev \
     python3-venv \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/*
-
-# Install gcloud SDK
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
-  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - \
-  && apt-get update -y && apt-get install google-cloud-cli -y \
+    wget \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -33,6 +27,13 @@ RUN wget -q https://www.orfeo-toolbox.org/packages/$OTB_LINUX64_PACKAGE \
   && chmod +x ./$OTB_LINUX64_PACKAGE \
   && ./$OTB_LINUX64_PACKAGE /usr/local/bin/ \
   && rm -f ./$OTB_LINUX64_PACKAGE
+
+# Install gcloud SDK
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+  && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - \
+  && apt-get update -y && apt-get install google-cloud-cli -y \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY requirements.txt .
